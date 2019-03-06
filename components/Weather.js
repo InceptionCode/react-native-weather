@@ -1,17 +1,32 @@
 import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
+import { weatherConditions } from '../utils/weather-conditions'
 
-const Weather = () => {
+const Weather = ({ weather, temperature }) => {
   return (
-    <View style={styles.weatherContainer}>
+    <View
+      style={[
+        styles.weatherContainer,
+        { backgroundColor: weatherConditions[weather.condition].color }
+      ]}
+    >
       <View style={styles.headerContainer}>
-        <MaterialCommunityIcons size={48} name="weather-sunny" color={'#fff'} />
-        <Text style={styles.tempText}>Temperature˚</Text>
+        <MaterialCommunityIcons
+          size={48}
+          name={weatherConditions[weather.condition].icon}
+          color={'#fff'}
+        />
+        <Text style={styles.tempText}>{temperature}˚</Text>
       </View>
       <View style={styles.bodyContainer}>
-        <Text style={styles.title}>So Sunny</Text>
-        <Text style={styles.subtitle}>It hurts my eyes!</Text>
+        <Text style={styles.title}>
+          {weatherConditions[weather.condition].title}
+        </Text>
+        <Text style={styles.subtitle}>{weather.desc}</Text>
+        <Text style={styles.subtitle}>
+          {weatherConditions[weather.condition].subtitle}
+        </Text>
       </View>
     </View>
   )
@@ -19,8 +34,7 @@ const Weather = () => {
 
 const styles = StyleSheet.create({
   weatherContainer: {
-    flex: 1,
-    backgroundColor: '#f7b733'
+    flex: 1
   },
   headerContainer: {
     flex: 1,
